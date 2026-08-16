@@ -1,0 +1,6 @@
+{
+  "name": "Rite - Distraction-Free Productivity Suite",
+  "description": "Wireframe blueprint, persuasive copy, and interactive landing page for Rite, the distraction-free productivity suite built for writers and content creators.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

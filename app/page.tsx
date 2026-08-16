@@ -1,69 +1,121 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React, { useState, useEffect } from 'react';
+import { Header } from './_components/Header';
+import { HeroSection } from './_components/HeroSection';
+import { SocialProofSection } from './_components/SocialProofSection';
+import { AgitationSection } from './_components/AgitationSection';
+import { FeaturesSection } from './_components/FeaturesSection';
+import { InteractiveFocusSection } from './_components/InteractiveFocusSection';
+import { TestimonialsSection } from './_components/TestimonialsSection';
+import { BottomCTA } from './_components/BottomCTA';
+import { Footer } from './_components/Footer';
+import { InteractiveEditorModal } from './_components/InteractiveEditorModal';
+import { WireframeBlueprintDrawer } from './_components/WireframeBlueprintDrawer';
+import { DashboardView } from './(user)/_components/DashboardView';
+import { usePathname } from 'next/navigation';
+
+export default function LandingPage() {
+  const pathname = usePathname();
+
+  const [currentRoute, setCurrentRoute] = useState<'landing' | 'dashboard'>(() => {
+    return pathname === '/dashboard' ? 'dashboard' : 'landing';
+  });
+  const [isAppModalOpen, setIsAppModalOpen] = useState(false);
+  const [activeFeatureForModal, setActiveFeatureForModal] = useState<string>('notes');
+  const [isSpecsDrawerOpen, setIsSpecsDrawerOpen] = useState(false);
+  const [isFocusModeActive, setIsFocusModeActive] = useState(false);
+
+  // Hash route listener
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#/dashboard' || window.location.pathname === '/dashboard') {
+        setCurrentRoute('dashboard');
+      } else if (window.location.hash === '#/' || window.location.hash === '') {
+        setCurrentRoute('landing');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const navigateToDashboard = () => {
+    window.location.hash = '#/dashboard';
+    setCurrentRoute('dashboard');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToLanding = () => {
+    window.location.hash = '#/';
+    setCurrentRoute('landing');
+  };
+
+  const handleOpenAppWithFeature = (featureId: string) => {
+    setActiveFeatureForModal(featureId);
+    navigateToDashboard();
+  };
+
+  // If on /dashboard route, render full Dashboard view
+  if (currentRoute === 'dashboard') {
+    return <DashboardView onReturnHome={navigateToLanding} />;
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div
+      className={`min-h-screen transition-colors duration-500 selection:bg-[#d42710] selection:text-[#f2e0d2] ${isFocusModeActive ? 'bg-[#2f2d32] text-[#f2e0d2]' : 'bg-[#f2e0d2] text-[#2f2d32]'
+        }`}
+    >
+      {/* Sticky Header */}
+      <Header
+        onOpenApp={navigateToDashboard}
+        onOpenSpecs={() => setIsSpecsDrawerOpen(true)}
+        isFocusMode={isFocusModeActive}
+        onToggleFocusMode={() => setIsFocusModeActive(!isFocusModeActive)}
+      />
+
+      {/* 2. Hero Section */}
+      <HeroSection onOpenApp={navigateToDashboard} />
+
+      {/* 3. Social Proof Authority Strip */}
+      <SocialProofSection />
+
+      {/* 4. Problem Agitation Section */}
+      <AgitationSection />
+
+      {/* 5. Core Features Grid */}
+      <FeaturesSection onOpenAppWithFeature={handleOpenAppWithFeature} />
+
+      {/* 6. Interactive Focus Section (The Magic Moment) */}
+      <InteractiveFocusSection
+        isFocusActive={isFocusModeActive}
+        onToggleFocus={() => setIsFocusModeActive(!isFocusModeActive)}
+      />
+
+      {/* 7. Wall of Love Testimonials */}
+      <TestimonialsSection />
+
+      {/* 8. Bottom CTA Hook */}
+      <BottomCTA onOpenApp={navigateToDashboard} />
+
+      {/* 9. Footer */}
+      <Footer
+        onOpenSpecs={() => setIsSpecsDrawerOpen(true)}
+        onOpenApp={navigateToDashboard}
+      />
+
+      {/* Interactive App Suite Sandbox Modal */}
+      <InteractiveEditorModal
+        isOpen={isAppModalOpen}
+        onClose={() => setIsAppModalOpen(false)}
+        initialFeature={activeFeatureForModal}
+      />
+
+      {/* Wireframe Blueprint & Copy Specs Drawer */}
+      <WireframeBlueprintDrawer
+        isOpen={isSpecsDrawerOpen}
+        onClose={() => setIsSpecsDrawerOpen(false)}
+        onOpenApp={navigateToDashboard}
+      />
     </div>
   );
 }

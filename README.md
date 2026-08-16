@@ -1,36 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rite
 
-## Getting Started
+Welcome to Rite! Made by Zamar Wint.
 
-First, run the development server:
+## What is Rite?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Rite is a productivity suite for writers, planners, bloggers, content creators, journalists, etc. With Rite, you can take notes, create to-do lists, generate text-to-speech or speech to text, and add timers. The aim of Rite is create a space where users can focus on a specific task at hand.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Download for Windows
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**_NB: This feature has not been developed as yet, and it will be electron based._**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To get Rite for Desktop, go to the [official website] and download it from there.
 
-## Learn More
+## DISCLAIMER
 
-To learn more about Next.js, take a look at the following resources:
+When you open the app, ignore the pop-up from Microsoft Defender, saying **"it prevented an unrecognized app from starting"**, the app is **virus free**, this only shows because I haven't yet purchased a code signing certificate for it from Microsoft. Microsoft automatically red flags apps that do not have their certificate.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+_**Ignore this, select more info, then select the "Run anyway" button when it appears at the bottom.**_
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+And there you go!
