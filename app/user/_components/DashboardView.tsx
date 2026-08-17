@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { DashboardSidebar } from './DashboardSidebar';
 import { DashboardCanvas } from './DashboardCanvas';
@@ -6,12 +8,11 @@ import { DashboardArchitectureModal } from './DashboardArchitectureModal';
 import { INITIAL_DOCUMENTS, INITIAL_TASKS, INITIAL_FOLDERS } from '@/lib/data/mockDashboardData';
 import { DocumentEntry, TaskItem, WorkspaceFolder } from '@/types/types';
 import { ArrowLeft, Home, Sliders } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-interface DashboardViewProps {
-  onReturnHome?: () => void;
-}
+export const DashboardView: React.FC = () => {
+  const router = useRouter();
 
-export const DashboardView: React.FC<DashboardViewProps> = ({ onReturnHome }) => {
   const [documents, setDocuments] = useState<DocumentEntry[]>(() => {
     const saved = localStorage.getItem('rite_dashboard_docs');
     return saved ? JSON.parse(saved) : INITIAL_DOCUMENTS;
@@ -180,28 +181,15 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onReturnHome }) =>
     <div className="w-screen h-screen overflow-hidden flex flex-col bg-[#2f2d32] text-[#f2e0d2]">
       {/* Top Application Control Strip (Visible in Normal Mode) */}
       {!isZenMode && (
-        <div className="h-10 bg-[#2f2d32] border-b border-[#f2e0d2]/10 px-4 flex items-center justify-between text-xs font-mono select-none shrink-0 z-40">
-          <div className="flex items-center space-x-3">
-            {onReturnHome && (
-              <button
-                onClick={onReturnHome}
-                className="flex items-center space-x-1 px-2 py-1 rounded bg-[#f2e0d2]/10 hover:bg-[#f2e0d2]/20 text-[#f2e0d2] transition-colors"
-                title="Return to Landing Page"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Landing Page</span>
-              </button>
-            )}
-
-            <div className="flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#d42710]" />
-              <span className="font-bold text-[#f2e0d2]">RITE</span>
-              <span className="text-[#f2e0d2]/40">/</span>
-              <span className="text-[#d42710] font-semibold">dashboard</span>
-            </div>
+        <div className="h-10 bg-[#2f2d32] border-b border-[#f2e0d2]/10 px-4 flex items-center justify-between text-xs font-mono shrink-0 z-40">
+          <div className="flex items-center space-x-1.5 cursor-pointer" onClick={() => router.push('/')}>
+            <span className="w-2 h-2 rounded-full bg-[#d42710]" />
+            <span className="font-bold text-[#f2e0d2]">RITE</span>
+            <span className="text-[#f2e0d2]/40">/</span>
+            <span className="text-[#d42710] font-semibold">dashboard</span>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 select-none">
             <button
               onClick={() => setIsSpecsModalOpen(true)}
               className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded bg-[#d42710]/20 hover:bg-[#d42710]/30 text-[#f2e0d2] transition-colors border border-[#d42710]/40"

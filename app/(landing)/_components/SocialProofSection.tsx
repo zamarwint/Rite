@@ -10,9 +10,9 @@ export const SocialProofSection: React.FC = () => {
   ];
 
   return (
-    <section id="social-proof-section" className="bg-[#f2e0d2] text-[#2f2d32] py-10 border-y border-[#2f2d32]/10">
+    <section id="social-proof-section" className="bg-background text-foreground py-10 border-y border-foreground/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p className="text-xs font-mono font-bold tracking-widest text-[#2f2d32]/60 uppercase mb-6">
+        <p className="text-xs font-mono font-bold tracking-widest text-foreground/60 uppercase mb-6">
           Loved by focused creators at:
         </p>
 
@@ -23,10 +23,10 @@ export const SocialProofSection: React.FC = () => {
               key={idx}
               className="flex flex-col items-center group cursor-default transition-all duration-300 transform hover:scale-105"
             >
-              <span className="font-serif font-black text-xl sm:text-2xl text-[#2f2d32]/40 group-hover:text-[#2f2d32] transition-colors tracking-tight">
+              <span className="font-serif font-black text-xl sm:text-2xl text-foreground/40 group-hover:text-foreground transition-colors tracking-tight">
                 {platform.name}
               </span>
-              <span className="text-[10px] font-mono text-[#2f2d32]/40 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="text-[10px] font-mono text-foreground/40 opacity-0 group-hover:opacity-100 transition-opacity">
                 {platform.desc}
               </span>
             </div>

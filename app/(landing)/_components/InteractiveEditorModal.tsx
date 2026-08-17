@@ -33,9 +33,7 @@ export const InteractiveEditorModal: React.FC<InteractiveEditorModalProps> = ({
   onClose,
   initialFeature = 'notes',
 }) => {
-  const [activeTab, setActiveTab] = useState<'notes' | 'todos' | 'timer' | 'speech'>(
-    (initialFeature as any) || 'notes'
-  );
+  const [activeTab, setActiveTab] = useState<'notes' | 'todos' | 'timer' | 'speech'>('notes');
 
   // Editor State
   const [docTitle, setDocTitle] = useState('Deep_Focus_Article_Draft.rite');
@@ -64,7 +62,7 @@ export const InteractiveEditorModal: React.FC<InteractiveEditorModalProps> = ({
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    let interval: any = null;
+    let interval: NodeJS.Timeout | null = null;
     if (isTimerRunning && timerSeconds > 0) {
       interval = setInterval(() => {
         setTimerSeconds((prev) => prev - 1);
@@ -80,7 +78,7 @@ export const InteractiveEditorModal: React.FC<InteractiveEditorModalProps> = ({
       }
       setIsTimerRunning(false);
     }
-    return () => clearInterval(interval);
+    return () => clearInterval(interval as NodeJS.Timeout);
   }, [isTimerRunning, timerSeconds, timerMode]);
 
   if (!isOpen) return null;
@@ -423,8 +421,8 @@ export const InteractiveEditorModal: React.FC<InteractiveEditorModalProps> = ({
                   <button
                     onClick={handleToggleSTT}
                     className={`w-full py-3 rounded-lg font-mono text-xs font-bold flex items-center justify-center space-x-2 transition-all ${isListening
-                        ? 'bg-[#d42710] text-[#f2e0d2] animate-pulse'
-                        : 'bg-[#f2e0d2] text-[#2f2d32] hover:bg-[#d42710] hover:text-[#f2e0d2]'
+                      ? 'bg-[#d42710] text-[#f2e0d2] animate-pulse'
+                      : 'bg-[#f2e0d2] text-[#2f2d32] hover:bg-[#d42710] hover:text-[#f2e0d2]'
                       }`}
                   >
                     {isListening ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}

@@ -1,4 +1,4 @@
-import { DocumentEntry, TaskItem, WorkspaceFolder } from '../types';
+import { DocumentEntry, TaskItem, WorkspaceFolder } from '@/types/types';
 
 export const INITIAL_DOCUMENTS: DocumentEntry[] = [
   {

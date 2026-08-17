@@ -6,13 +6,11 @@ import { BRAND_COLORS, COLOR_ROLES } from '@/lib/constants/colorPalette';
 interface WireframeBlueprintDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onOpenApp: () => void;
 }
 
 export const WireframeBlueprintDrawer: React.FC<WireframeBlueprintDrawerProps> = ({
   isOpen,
   onClose,
-  onOpenApp,
 }) => {
   const [selectedSection, setSelectedSection] = useState<string>(WIREFRAME_SPECS[0].id);
 
@@ -87,8 +85,8 @@ export const WireframeBlueprintDrawer: React.FC<WireframeBlueprintDrawerProps> =
                   key={spec.id}
                   onClick={() => setSelectedSection(spec.id)}
                   className={`p-2.5 rounded-lg text-left transition-all font-semibold border ${selectedSection === spec.id
-                      ? 'bg-[#d42710] text-[#f2e0d2] border-[#d42710] shadow-md'
-                      : 'bg-[#2f2d32]/5 text-[#2f2d32] border-[#2f2d32]/10 hover:border-[#d42710]'
+                    ? 'bg-[#d42710] text-[#f2e0d2] border-[#d42710] shadow-md'
+                    : 'bg-[#2f2d32]/5 text-[#2f2d32] border-[#2f2d32]/10 hover:border-[#d42710]'
                     }`}
                 >
                   {spec.sectionName}
@@ -114,7 +112,7 @@ export const WireframeBlueprintDrawer: React.FC<WireframeBlueprintDrawerProps> =
                 UI / Design Notes:
               </h5>
               <ul className="space-y-2 text-sm text-[#2f2d32]/90">
-                {activeSpec.designNotes.map((note, idx) => (
+                {activeSpec.designNotes.map((note: string, idx: number) => (
                   <li key={idx} className="flex items-start space-x-2">
                     <CheckCircle2 className="w-4 h-4 text-[#d42710] shrink-0 mt-0.5" />
                     <span>{note}</span>
@@ -171,7 +169,6 @@ export const WireframeBlueprintDrawer: React.FC<WireframeBlueprintDrawerProps> =
               <button
                 onClick={() => {
                   onClose();
-                  onOpenApp();
                 }}
                 className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-full bg-[#d42710] text-[#f2e0d2] font-bold text-xs hover:bg-[#b81f0b] transition-colors"
               >

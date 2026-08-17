@@ -15,18 +15,18 @@ export const InteractiveFocusSection: React.FC<InteractiveFocusSectionProps> = (
   return (
     <section
       id="interactive-focus"
-      className={`py-24 md:py-32 transition-colors duration-700 relative overflow-hidden text-center ${isFocusActive ? 'bg-[#2f2d32] text-[#f2e0d2]' : 'bg-[#f2e0d2] text-[#2f2d32]'
+      className={`py-24 md:py-32 transition-colors duration-700 relative overflow-hidden text-center text-foreground ${isFocusActive ? 'bg-background' : 'bg-background'
         }`}
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top Tag */}
         <div
           className={`inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-6 border ${isFocusActive
-              ? 'bg-[#d42710]/20 border-[#d42710] text-[#d42710]'
-              : 'bg-[#2f2d32]/10 border-[#2f2d32]/20 text-[#2f2d32]'
+            ? 'bg-primary/20 border-primary text-primary'
+            : 'bg-muted-foreground/10 border-muted-foreground/20 text-muted-foreground'
             }`}
         >
-          <Sparkles className="w-4 h-4 text-[#d42710] animate-spin" />
+          <Sparkles className="w-4 h-4 text-primary animate-spin" />
           <span>THE MAGIC MOMENT DEMO</span>
         </div>
 
@@ -46,8 +46,8 @@ export const InteractiveFocusSection: React.FC<InteractiveFocusSectionProps> = (
             id="hyper-focus-toggle-button"
             onClick={onToggleFocus}
             className={`relative group w-64 sm:w-80 h-24 sm:h-28 rounded-full p-2.5 transition-all duration-500 shadow-2xl flex items-center border-4 ${isFocusActive
-                ? 'bg-[#d42710] border-[#f2e0d2]/30 text-[#f2e0d2]'
-                : 'bg-[#2f2d32] border-[#2f2d32] text-[#f2e0d2]'
+              ? 'bg-primary border-background/30 text-foreground'
+              : 'bg-background border-background/30 text-foreground'
               }`}
           >
             {/* Sliding Knob */}
@@ -55,7 +55,7 @@ export const InteractiveFocusSection: React.FC<InteractiveFocusSectionProps> = (
               className={`w-20 sm:w-24 h-20 sm:h-22 rounded-full bg-[#f2e0d2] text-[#2f2d32] flex items-center justify-center font-bold text-lg shadow-lg transform transition-transform duration-500 ${isFocusActive ? 'translate-x-[150px] sm:translate-x-[200px] bg-[#f2e0d2] text-[#d42710]' : 'translate-x-0'
                 }`}
             >
-              <Power className={`w-8 h-8 ${isFocusActive ? 'text-[#d42710]' : 'text-[#2f2d32]'}`} />
+              <Power className={`w-8 h-8 ${isFocusActive ? 'text-[#d42710]' : 'text-[#2f2d32]'} cursor-pointer`} />
             </div>
 
             {/* Label text inside track */}
@@ -76,17 +76,17 @@ export const InteractiveFocusSection: React.FC<InteractiveFocusSectionProps> = (
 
           {/* Hidden Message that Appears when Toggled ON */}
           {isFocusActive && (
-            <div className="mt-8 p-6 rounded-2xl bg-[#f2e0d2]/10 border-2 border-[#d42710] text-[#f2e0d2] max-w-lg mx-auto animate-fadeIn shadow-2xl">
-              <p className="font-serif text-2xl font-bold text-[#d42710] mb-2">
+            <div className="mt-8 p-6 rounded-2xl bg-background/10 border-2 border-primary text-foreground max-w-lg mx-auto animate-fadeIn shadow-2xl">
+              <p className="font-serif text-2xl font-bold text-primary mb-2">
                 Ahh, much better.
               </p>
-              <p className="text-base text-[#f2e0d2]/90 font-normal">
+              <p className="text-base text-foreground/90 font-normal">
                 This is what writing in Rite feels like. Zero notifications, zero browser tabs, pure flow.
               </p>
-              <div className="mt-4 pt-4 border-t border-[#f2e0d2]/20 flex items-center justify-center space-x-4">
+              <div className="mt-4 pt-4 border-t border-muted-foreground/20 flex items-center justify-center space-x-4">
                 <button
                   onClick={() => setIsAmbientAudioOn(!isAmbientAudioOn)}
-                  className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-[#d42710] text-[#f2e0d2] text-xs font-mono font-bold hover:bg-[#b81f0b] transition-colors"
+                  className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-primary text-foreground text-xs font-mono font-bold hover:bg-[#b81f0b] transition-colors"
                 >
                   {isAmbientAudioOn ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
                   <span>{isAmbientAudioOn ? 'Ambient Cafe Audio: ON' : 'Enable Soothing Rain Audio'}</span>

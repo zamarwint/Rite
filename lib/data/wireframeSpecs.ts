@@ -1,4 +1,4 @@
-import { FeatureCard, Testimonial, WireframeSectionSpec } from '../types';
+import { FeatureCard, Testimonial, WireframeSectionSpec } from '@/types/types';
 
 export const WIREFRAME_SPECS: WireframeSectionSpec[] = [
   {
