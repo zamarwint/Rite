@@ -6,11 +6,21 @@ Welcome to Rite! Made by Zamar Wint.
 
 Rite is a productivity suite for writers, planners, bloggers, content creators, journalists, etc. With Rite, you can take notes, create to-do lists, generate text-to-speech or speech to text, and add timers. The aim of Rite is create a space where users can focus on a specific task at hand.
 
+## Built with
+
+- Next.js
+- TypeScript
+- Shadcn
+- TailwindCSS
+- Clerk
+- Prisma
+- Supabase
+
 ## Download for Windows
 
 **_NB: This feature has not been developed as yet, and it will be electron based._**
 
-To get Rite for Desktop, go to the [official website] and download it from there.
+To get Rite for Desktop, go to the [official website](https://#) and download it from there.
 
 ## DISCLAIMER
 

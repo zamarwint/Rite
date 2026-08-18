@@ -9,9 +9,12 @@ import { INITIAL_DOCUMENTS, INITIAL_TASKS, INITIAL_FOLDERS } from '@/lib/data/mo
 import { DocumentEntry, TaskItem, WorkspaceFolder } from '@/types/types';
 import { ArrowLeft, Home, Sliders } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
 
 export const DashboardView: React.FC = () => {
   const router = useRouter();
+  const { resolvedTheme } = useTheme();
 
   const [documents, setDocuments] = useState<DocumentEntry[]>(() => {
     const saved = localStorage.getItem('rite_dashboard_docs');
@@ -183,7 +186,25 @@ export const DashboardView: React.FC = () => {
       {!isZenMode && (
         <div className="h-10 bg-[#2f2d32] border-b border-[#f2e0d2]/10 px-4 flex items-center justify-between text-xs font-mono shrink-0 z-40">
           <div className="flex items-center space-x-1.5 cursor-pointer" onClick={() => router.push('/')}>
-            <span className="w-2 h-2 rounded-full bg-[#d42710]" />
+            {resolvedTheme === 'light' ? (
+              <Image
+                src="/logos/logo.svg"
+                alt="Logo"
+                width={100}
+                height={100}
+                className='size-5'
+                loading='eager'
+              />
+            ) : (
+              <Image
+                src="/logos/logo2.svg"
+                alt="Logo"
+                width={100}
+                height={100}
+                className='size-5'
+                loading='eager'
+              />
+            )}
             <span className="font-bold text-[#f2e0d2]">RITE</span>
             <span className="text-[#f2e0d2]/40">/</span>
             <span className="text-[#d42710] font-semibold">dashboard</span>

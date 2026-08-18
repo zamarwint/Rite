@@ -22,6 +22,7 @@ import {
   Radio,
 } from 'lucide-react';
 import { TaskItem, DocumentEntry } from '@/types/types';
+import { Button } from '@/components/ui/button';
 
 interface ProductivityDockProps {
   isDockCollapsed: boolean;
@@ -202,13 +203,14 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
     return (
       <aside className="w-14 bg-[#2f2d32] border-l border-[#f2e0d2]/10 flex flex-col items-center justify-between py-5 text-[#f2e0d2] shrink-0 transition-all duration-300 z-30 select-none">
         <div className="flex flex-col items-center space-y-4">
-          <button
+          <Button
             onClick={onToggleCollapse}
+            variant='outline'
             className="p-2 rounded-lg text-[#f2e0d2]/60 hover:text-[#f2e0d2] hover:bg-[#f2e0d2]/10 transition-colors"
             title="Expand Productivity Dock"
           >
             <ChevronLeft className="w-4 h-4" />
-          </button>
+          </Button>
 
           {/* Quick Mini Timer Icon */}
           <div
@@ -260,20 +262,21 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
             </span>
           </div>
 
-          <button
+          <Button
             onClick={onToggleCollapse}
+            variant='outline'
             className="p-1 rounded hover:bg-[#f2e0d2]/10 text-[#f2e0d2]/60 hover:text-[#f2e0d2] transition-colors"
             title="Collapse Dock"
           >
             <ChevronRight className="w-4 h-4" />
-          </button>
+          </Button>
         </div>
 
         {/* PERSISTENT POMODORO TIMER WIDGET */}
         <div
           className={`p-3 rounded-xl border transition-all ${isUrgentTimer
-              ? 'bg-[#d42710]/20 border-[#d42710] shadow-[0_0_15px_rgba(212,39,16,0.3)] animate-pulse'
-              : 'bg-[#f2e0d2]/5 border-[#f2e0d2]/10'
+            ? 'bg-[#d42710]/20 border-[#d42710] shadow-[0_0_15px_rgba(212,39,16,0.3)] animate-pulse'
+            : 'bg-[#f2e0d2]/5 border-[#f2e0d2]/10'
             }`}
         >
           <div className="flex items-center justify-between text-xs font-mono mb-2">
@@ -320,51 +323,52 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
             </div>
 
             <div className="flex items-center space-x-2">
-              <button
+              <Button
                 onClick={handleToggleTimer}
                 className={`px-3.5 py-2 rounded-lg font-mono font-bold text-xs uppercase tracking-wider flex items-center space-x-1.5 transition-all shadow-md ${isTimerRunning
-                    ? 'bg-[#f2e0d2]/20 text-[#f2e0d2] hover:bg-[#f2e0d2]/30'
-                    : 'bg-[#d42710] hover:bg-[#b81f0b] text-[#f2e0d2]'
+                  ? 'bg-[#f2e0d2]/20 text-[#f2e0d2] hover:bg-[#f2e0d2]/30'
+                  : 'bg-[#d42710] hover:bg-[#b81f0b] text-[#f2e0d2]'
                   }`}
               >
                 {isTimerRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
                 <span>{isTimerRunning ? 'Pause' : 'Focus'}</span>
-              </button>
+              </Button>
 
-              <button
+              <Button
                 onClick={() => handleResetTimer(timerMode)}
+                variant='outline'
                 className="p-2 rounded-lg hover:bg-[#f2e0d2]/10 text-[#f2e0d2]/60 hover:text-[#f2e0d2] transition-colors"
                 title="Reset Timer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-              </button>
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Tab Selector */}
         <div className="flex items-center justify-between mt-3 bg-[#f2e0d2]/5 p-1 rounded-lg border border-[#f2e0d2]/10 text-xs font-mono">
-          <button
+          <Button
             onClick={() => setActiveTab('all')}
-            className={`flex-1 py-1 rounded text-center transition-colors ${activeTab === 'all' ? 'bg-[#f2e0d2] text-[#2f2d32] font-bold' : 'text-[#f2e0d2]/70 hover:text-[#f2e0d2]'
-              }`}
+            variant={activeTab === 'all' ? 'default' : 'outline'}
+            className={`flex-1 py-1 rounded text-center transition-colors `}
           >
             All Tools
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setActiveTab('tasks')}
-            className={`flex-1 py-1 rounded text-center transition-colors ${activeTab === 'tasks' ? 'bg-[#f2e0d2] text-[#2f2d32] font-bold' : 'text-[#f2e0d2]/70 hover:text-[#f2e0d2]'
-              }`}
+            variant={activeTab === 'tasks' ? 'default' : 'outline'}
+            className={`flex-1 py-1 rounded text-center transition-colors `}
           >
             Tasks ({docTasks.length})
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => setActiveTab('audio')}
-            className={`flex-1 py-1 rounded text-center transition-colors ${activeTab === 'audio' ? 'bg-[#f2e0d2] text-[#2f2d32] font-bold' : 'text-[#f2e0d2]/70 hover:text-[#f2e0d2]'
-              }`}
+            variant={activeTab === 'audio' ? 'default' : 'outline'}
+            className={`flex-1 py-1 rounded text-center transition-colors `}
           >
             Audio STT/TTS
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -383,8 +387,8 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
             {/* 1. Speech-to-Text (STT) Dictation UI */}
             <div
               className={`p-3.5 rounded-xl border transition-all ${isDictating
-                  ? 'bg-[#d42710]/15 border-[#d42710] shadow-[0_0_20px_rgba(212,39,16,0.3)]'
-                  : 'bg-[#f2e0d2]/5 border-[#f2e0d2]/10'
+                ? 'bg-[#d42710]/15 border-[#d42710] shadow-[0_0_20px_rgba(212,39,16,0.3)]'
+                : 'bg-[#f2e0d2]/5 border-[#f2e0d2]/10'
                 }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -418,17 +422,17 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
                   : 'Capture spoken thoughts at conversational speed without typing fatigue.'}
               </p>
 
-              <button
+              <Button
                 id="stt-dictation-toggle-btn"
                 onClick={onToggleDictation}
                 className={`w-full py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center space-x-2 transition-all shadow-md ${isDictating
-                    ? 'bg-[#d42710] hover:bg-[#b81f0b] text-[#f2e0d2] ring-4 ring-[#d42710]/30 animate-pulse'
-                    : 'bg-[#f2e0d2] hover:bg-[#f2e0d2]/90 text-[#2f2d32]'
+                  ? 'bg-[#d42710] hover:bg-[#b81f0b] text-[#f2e0d2] ring-4 ring-[#d42710]/30 animate-pulse'
+                  : 'bg-[#f2e0d2] hover:bg-[#f2e0d2]/90 text-[#2f2d32]'
                   }`}
               >
                 {isDictating ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4 text-[#d42710]" />}
                 <span>{isDictating ? 'Stop Voice Recording' : 'Start Voice Dictation'}</span>
-              </button>
+              </Button>
             </div>
 
             {/* 2. Text-to-Speech (TTS) Media Player */}
@@ -442,16 +446,16 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
               </div>
 
               <div className="flex items-center space-x-3">
-                <button
+                <Button
                   onClick={onToggleTTS}
                   className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-transform hover:scale-105 shadow-md ${isPlayingTTS
-                      ? 'bg-[#d42710] text-[#f2e0d2]'
-                      : 'bg-[#f2e0d2] text-[#2f2d32] hover:bg-[#d42710] hover:text-[#f2e0d2]'
+                    ? 'bg-[#d42710] text-[#f2e0d2]'
+                    : 'bg-[#f2e0d2] text-[#2f2d32] hover:bg-[#d42710] hover:text-[#f2e0d2]'
                     }`}
                   title={isPlayingTTS ? 'Pause Audio' : 'Play Draft Aloud'}
                 >
                   {isPlayingTTS ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
-                </button>
+                </Button>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between text-[11px] font-mono text-[#f2e0d2]/70 mb-1">
@@ -461,16 +465,16 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
                   {/* Speed toggle pills */}
                   <div className="flex items-center space-x-1 font-mono text-[10px]">
                     {[0.8, 1.0, 1.25, 1.5].map((speed) => (
-                      <button
+                      <Button
                         key={speed}
                         onClick={() => setTtsSpeed(speed)}
                         className={`px-2 py-0.5 rounded transition-colors ${ttsSpeed === speed
-                            ? 'bg-[#d42710] text-[#f2e0d2] font-bold'
-                            : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/70 hover:bg-[#f2e0d2]/20'
+                          ? 'bg-[#d42710] text-[#f2e0d2] font-bold'
+                          : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/70 hover:bg-[#f2e0d2]/20'
                           }`}
                       >
                         {speed}x
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </div>
@@ -511,49 +515,50 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
                   placeholder="Add actionable task..."
                   className="flex-1 bg-transparent px-3 py-2 text-xs text-[#f2e0d2] placeholder-[#f2e0d2]/40 outline-none font-sans"
                 />
-                <button
+                <Button
                   type="submit"
+                  variant='outline'
                   className="px-3 py-2 bg-[#d42710] hover:bg-[#b81f0b] text-[#f2e0d2] font-bold text-xs transition-colors shrink-0"
                   title="Add Task"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                </button>
+                </Button>
               </div>
 
               {/* Priority Selector */}
               <div className="flex items-center justify-between text-[10px] font-mono text-[#f2e0d2]/60 px-1">
                 <span>Priority:</span>
                 <div className="flex items-center space-x-1.5">
-                  <button
-                    type="button"
+                  <Button
+                    type="Button"
                     onClick={() => setNewTaskPriority('low')}
                     className={`px-2 py-0.5 rounded ${newTaskPriority === 'low'
-                        ? 'bg-emerald-600 text-white font-bold'
-                        : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/60'
+                      ? 'bg-emerald-600 text-white font-bold'
+                      : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/60'
                       }`}
                   >
                     Low
-                  </button>
-                  <button
-                    type="button"
+                  </Button>
+                  <Button
+                    type="Button"
                     onClick={() => setNewTaskPriority('medium')}
                     className={`px-2 py-0.5 rounded ${newTaskPriority === 'medium'
-                        ? 'bg-amber-600 text-white font-bold'
-                        : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/60'
+                      ? 'bg-amber-600 text-white font-bold'
+                      : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/60'
                       }`}
                   >
                     Medium
-                  </button>
-                  <button
-                    type="button"
+                  </Button>
+                  <Button
+                    type="Button"
                     onClick={() => setNewTaskPriority('high')}
                     className={`px-2 py-0.5 rounded ${newTaskPriority === 'high'
-                        ? 'bg-[#d42710] text-white font-bold'
-                        : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/60'
+                      ? 'bg-[#d42710] text-white font-bold'
+                      : 'bg-[#f2e0d2]/10 text-[#f2e0d2]/60'
                       }`}
                   >
                     High
-                  </button>
+                  </Button>
                 </div>
               </div>
             </form>
@@ -565,8 +570,8 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
                   key={task.id}
                   onClick={() => onToggleTask(task.id)}
                   className={`group flex items-start justify-between p-2.5 rounded-lg border transition-all cursor-pointer ${task.completed
-                      ? 'bg-[#f2e0d2]/5 border-[#f2e0d2]/5 opacity-60'
-                      : 'bg-[#f2e0d2]/5 border-[#f2e0d2]/10 hover:border-[#d42710]/40'
+                    ? 'bg-[#f2e0d2]/5 border-[#f2e0d2]/5 opacity-60'
+                    : 'bg-[#f2e0d2]/5 border-[#f2e0d2]/10 hover:border-[#d42710]/40'
                     }`}
                 >
                   <div className="flex items-start space-x-2.5 flex-1 min-w-0 pr-2">
@@ -588,10 +593,10 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
                         {task.priority && (
                           <span
                             className={`px-1.5 py-0.2 rounded uppercase ${task.priority === 'high'
-                                ? 'bg-[#d42710]/20 text-[#d42710] font-bold'
-                                : task.priority === 'medium'
-                                  ? 'bg-amber-500/20 text-amber-300'
-                                  : 'bg-emerald-500/20 text-emerald-300'
+                              ? 'bg-[#d42710]/20 text-[#d42710] font-bold'
+                              : task.priority === 'medium'
+                                ? 'bg-amber-500/20 text-amber-300'
+                                : 'bg-emerald-500/20 text-emerald-300'
                               }`}
                           >
                             {task.priority}
@@ -602,7 +607,7 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
                     </div>
                   </div>
 
-                  <button
+                  <Button
                     onClick={(e) => {
                       e.stopPropagation();
                       onDeleteTask(task.id);
@@ -611,7 +616,7 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({
                     title="Delete task"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>

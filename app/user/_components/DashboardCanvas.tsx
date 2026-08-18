@@ -127,8 +127,8 @@ export const DashboardCanvas: React.FC<DashboardCanvasProps> = ({
   return (
     <main
       className={`relative flex-1 flex flex-col h-full overflow-hidden transition-all duration-500 ${isZenMode
-          ? 'bg-[#f2e0d2] text-[#2f2d32] fixed inset-0 z-50 p-6 sm:p-12'
-          : 'bg-[#f2e0d2] text-[#2f2d32]'
+        ? 'bg-[#f2e0d2] text-[#2f2d32] fixed inset-0 z-50 p-6 sm:p-12'
+        : 'bg-[#f2e0d2] text-[#2f2d32]'
         }`}
       onMouseMove={() => {
         if (isZenMode) {
@@ -336,15 +336,6 @@ export const DashboardCanvas: React.FC<DashboardCanvasProps> = ({
               <span>CANVAS: ACTIVE DRAFT</span>
             </span>
             <span className="hidden sm:inline">UTF-8 • MARKDOWN SUPPORTED</span>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={onOpenSpecsModal}
-              className="text-[#2f2d32] hover:text-[#d42710] font-bold transition-colors"
-            >
-              Inspect /dashboard Architecture →
-            </button>
           </div>
         </footer>
       )}
