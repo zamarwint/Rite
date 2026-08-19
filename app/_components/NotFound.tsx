@@ -19,7 +19,7 @@ export default function NotFoundComponent() {
                     alt="Logo"
                     width={100}
                     height={100}
-                    className='size-50 animate-spin'
+                    className='size-50'
                     loading='eager'
                 />
             ) : (
@@ -28,7 +28,7 @@ export default function NotFoundComponent() {
                     alt="Logo"
                     width={100}
                     height={100}
-                    className='size-50 animate-pulse'
+                    className='size-50'
                     loading='eager'
                 />
             )}
@@ -38,8 +38,8 @@ export default function NotFoundComponent() {
                 <Separator />
                 <p className="text-lg">Please check the URL and try again.</p>
             </div>
-            <Button onClick={() => router.back()} className='px-12 py-8 flex items-center justify-center gap-2 cursor-pointer'>
-                <ArrowLeft className="size-5 transition-transform duration-300 " />
+            <Button onClick={() => router.back()} className='px-12 py-8 flex items-center justify-center gap-2 cursor-pointer group'>
+                <ArrowLeft className="size-5 group-hover:-translate-x-0.5 transition-transform duration-300 " />
                 <span className="font-medium text-lg">Go Back</span>
             </Button>
         </div>

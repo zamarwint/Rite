@@ -181,10 +181,10 @@ export const DashboardView: React.FC = () => {
   };
 
   return (
-    <div className="w-screen h-screen overflow-hidden flex flex-col bg-[#2f2d32] text-[#f2e0d2]">
+    <div className="w-screen h-screen overflow-hidden flex flex-col bg-background text-foreground">
       {/* Top Application Control Strip (Visible in Normal Mode) */}
       {!isZenMode && (
-        <div className="h-10 bg-[#2f2d32] border-b border-[#f2e0d2]/10 px-4 flex items-center justify-between text-xs font-mono shrink-0 z-40">
+        <div className="h-10 bg-background border-b border-border px-4 flex items-center justify-between text-xs font-mono shrink-0 z-40">
           <div className="flex items-center space-x-1.5 cursor-pointer" onClick={() => router.push('/')}>
             {resolvedTheme === 'light' ? (
               <Image
@@ -205,18 +205,18 @@ export const DashboardView: React.FC = () => {
                 loading='eager'
               />
             )}
-            <span className="font-bold text-[#f2e0d2]">RITE</span>
-            <span className="text-[#f2e0d2]/40">/</span>
-            <span className="text-[#d42710] font-semibold">dashboard</span>
+            <span className="font-bold text-foreground">RITE</span>
+            <span className="text-muted-foreground">/</span>
+            <span className="text-primary font-semibold">dashboard</span>
           </div>
 
           <div className="flex items-center space-x-3 select-none">
             <button
               onClick={() => setIsSpecsModalOpen(true)}
-              className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded bg-[#d42710]/20 hover:bg-[#d42710]/30 text-[#f2e0d2] transition-colors border border-[#d42710]/40"
+              className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded bg-background/20 hover:bg-background/30 text-foreground transition-colors border border-primary/40"
               title="Inspect UX Architecture Specs"
             >
-              <Sliders className="w-3.5 h-3.5 text-[#d42710]" />
+              <Sliders className="w-3.5 h-3.5 text-primary" />
               <span className="hidden sm:inline">UI Architecture Specs</span>
             </button>
           </div>

@@ -20,10 +20,9 @@ import {
   Sliders,
 } from 'lucide-react';
 import { DocumentEntry, WorkspaceFolder } from '@/types/types';
-import { OrganizationSwitcher, UserButton, UserProfile } from '@clerk/nextjs';
+import { ClerkLoading, OrganizationSwitcher, UserButton, useUser } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Separator } from '@/components/ui/separator';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 
 interface DashboardSidebarProps {
   isCollapsed: boolean;
@@ -52,8 +51,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   folders,
   onOpenSpecsModal,
 }) => {
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { isSignedIn, isLoaded, user } = useUser();
 
   const filteredDocs = documents.filter((doc) => {
     const matchesFolder =
@@ -67,7 +66,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
   if (isCollapsed) {
     return (
-      <aside className="w-16 bg-[#2f2d32] text-[#f2e0d2] flex flex-col items-center justify-between py-5 border-r border-[#f2e0d2]/10 transition-all duration-300 z-30 shrink-0 select-none">
+      <aside className="w-16 bg-background text-foreground flex flex-col items-center justify-between py-5 border-r border-border transition-all duration-300 z-30 shrink-0 select-none">
         {/* Top Logo & Expand */}
         <div className="flex flex-col items-center space-y-4">
           <UserButton />
@@ -75,7 +74,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           <Button
             onClick={onToggleCollapse}
             variant='outline'
-            className="p-2 rounded-lg text-[#f2e0d2]/60 hover:text-[#f2e0d2] hover:bg-[#f2e0d2]/10 transition-colors"
+            className="p-2 rounded-lg text-muted-foreground hover:text-foreground transition-colors"
             title="Expand Sidebar"
           >
             <ChevronRight className="w-4 h-4" />
@@ -122,18 +121,10 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         <div className="flex flex-col items-center space-y-3">
           <Button
             onClick={onCreateDocument}
-            className="w-10 h-10 rounded-full bg-[#d42710] hover:bg-[#b81f0b] text-[#f2e0d2] flex items-center justify-center shadow-lg transition-all transform hover:scale-105"
+            className="w-10 h-10 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground flex items-center justify-center shadow-lg transition-all transform hover:scale-105"
             title="New Entry (⌘N)"
           >
             <Plus className="w-5 h-5" />
-          </Button>
-          <Button
-            onClick={onOpenSpecsModal}
-            variant='outline'
-            className="p-2 rounded-lg text-[#f2e0d2]/40 hover:text-[#d42710] transition-colors"
-            title="UI Architecture Blueprint"
-          >
-            <Sliders className="w-4 h-4" />
           </Button>
         </div>
       </aside>
@@ -141,28 +132,31 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   }
 
   return (
-    <aside className="w-64 sm:w-72 bg-[#2f2d32] text-foreground flex flex-col justify-between border-r border-[#f2e0d2]/10 transition-all duration-300 z-30 shrink-0 select-none h-full overflow-hidden">
+    <aside className="w-64 sm:w-72 bg-background text-foreground flex flex-col justify-between border-r border-border transition-all duration-300 z-30 shrink-0 select-none h-full overflow-hidden">
       {/* 1. TOP: User Profile & Workspace Selector */}
-      <div className="p-4 border-b border-[#f2e0d2]/10 text-foreground flex flex-col items-start">
-        <div className='flex items-center gap-2'>
-          <UserButton />
-          <span className='text-sm'>Profile</span>
+      <div className="p-4 border-b border-border text-foreground flex flex-col items-start">
+        <div className='flex items-center justify-between size-full'>
+          <div className='flex items-center justify-start gap-2 w-full text-foreground'>
+            <UserButton />
+            {!isLoaded ? <ClerkLoading /> : isSignedIn && <h1 className='text-sm font-medium'>{user!.firstName}</h1>}
+          </div>
+          <div className='size-full'>
+            <OrganizationSwitcher
+              afterCreateOrganizationUrl='/user'
+            />
+          </div>
         </div>
-        <Separator className='my-3' />
-        <OrganizationSwitcher
-        />
       </div>
 
       {/* Quick Search */}
       <div className="mt-3 relative px-3">
-        <Search className="w-3.5 h-3.5 absolute left-6 top-1/2 -translate-y-1/2 text-[#f2e0d2]/40" />
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search drafts (⌘K)..."
-          className="w-full bg-[#f2e0d2]/5 border border-[#f2e0d2]/10 rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#f2e0d2] placeholder-[#f2e0d2]/40 focus:outline-none focus:border-[#d42710] font-sans"
-        />
+        <InputGroup className="max-w-full">
+          <InputGroupInput className='rounded-lg' placeholder="Search drafts..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+          <InputGroupAddon>
+            <Search />
+          </InputGroupAddon>
+          <InputGroupAddon align="inline-end"></InputGroupAddon>
+        </InputGroup>
       </div>
 
       {/* 2. CENTER: Folder Categories & Document List */}
@@ -170,7 +164,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         {/* Navigation Categories */}
         <div>
           <div className="flex items-center justify-between px-2 mb-2">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#f2e0d2]/50">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">
               Workspace Views
             </span>
           </div>
@@ -234,7 +228,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         {/* Documents in Current View */}
         <div>
           <div className="flex items-center justify-between px-2 mb-2">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#f2e0d2]/50">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground">
               Active Drafts ({filteredDocs.length})
             </span>
           </div>
@@ -247,13 +241,13 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                   key={doc.id}
                   onClick={() => onSelectDocument(doc.id)}
                   className={`group relative flex items-center justify-between p-2 rounded-lg cursor-pointer transition-all border ${isActive
-                    ? 'bg-[#f2e0d2] text-[#2f2d32] border-[#f2e0d2] font-medium shadow-md'
-                    : 'bg-transparent text-[#f2e0d2]/80 border-transparent hover:bg-[#f2e0d2]/5 hover:text-[#f2e0d2]'
+                    ? 'bg-foreground text-background border-foreground font-medium shadow-md'
+                    : 'bg-transparent text-foreground border-transparent hover:bg-background/5 hover:text-foreground'
                     }`}
                 >
                   <div className="flex-1 min-w-0 pr-2">
                     <div className="flex items-center space-x-1.5">
-                      {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#d42710] shrink-0" />}
+                      {isActive && <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />}
                       <p className="text-xs font-serif font-bold truncate leading-snug">{doc.title}</p>
                     </div>
                     <div className="flex items-center space-x-2 mt-1 text-[10px] font-mono opacity-70">
@@ -270,8 +264,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                       onDeleteDocument(doc.id);
                     }}
                     variant='outline'
-                    className={`p-1 rounded opacity-0 group-hover:opacity-100 hover:text-[#d42710] transition-opacity ${isActive ? 'text-[#2f2d32]/60' : 'text-[#f2e0d2]/40'
-                      }`}
+                    className={`p-1 rounded opacity-0 group-hover:opacity-100 hover:text-primary transition-opacity ${isActive ? 'text-foreground/60' : 'text-muted-foreground/40'}`}
                     title="Delete Draft"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -284,20 +277,20 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       </div>
 
       {/* 3. BOTTOM: New Entry CTA & Sidebar Collapse Toggle */}
-      <div className="p-3 border-t border-[#f2e0d2]/10 space-y-2 bg-[#2f2d32]">
+      <div className="p-3 border-t border-border space-y-2">
         <Button
           onClick={onCreateDocument}
-          className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-lg bg-[#d42710] hover:bg-[#b81f0b] text-[#f2e0d2] font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          className="w-full flex items-center justify-center space-x-2 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0"
         >
           <Plus className="w-4 h-4" />
           <span>New Entry (⌘N)</span>
         </Button>
 
-        <div className="flex items-center justify-between pt-1 text-[11px] font-mono text-[#f2e0d2]/60">
+        <div className="flex items-center justify-between pt-1 text-[11px] font-mono text-muted-foreground">
           <Button
             onClick={onToggleCollapse}
             variant='outline'
-            className="flex items-center space-x-1 p-1 rounded hover:bg-[#f2e0d2]/10 text-[#f2e0d2]/70 hover:text-[#f2e0d2] transition-colors"
+            className="flex items-center space-x-1 p-1 rounded hover:bg-background/10 hover:text-foreground transition-colors"
             title="Collapse Sidebar (⌘B)"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
