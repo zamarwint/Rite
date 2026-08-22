@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
 // For adding custom fonts with other frameworks, see:
@@ -25,7 +24,6 @@ const fontMono = JetBrains_Mono({
   variable: "--font-mono",
 });
 
-
 export const metadata: Metadata = {
   title: "Rite",
   description: "A productivity suite for writers, planners, bloggers, content creators, journalists, etc.",
@@ -49,11 +47,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClerkProvider>
-            <Suspense fallback={<Loading />}>
-              {children}
-            </Suspense>
-          </ClerkProvider>
+          <Suspense fallback={<Loading />}>
+            {children}
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

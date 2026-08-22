@@ -1,3 +1,5 @@
+import { JwtHeader, JwtPayload } from "@supabase/supabase-js";
+
 export interface FeatureCard {
   id: string;
   title: string;
@@ -54,3 +56,8 @@ export interface WireframeSectionSpec {
   keyElements: string[];
 }
 
+export type SupabaseClaims = {
+  claims: JwtPayload;
+  header: JwtHeader;
+  signature: Uint8Array;
+} | null

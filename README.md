@@ -12,9 +12,7 @@ Rite is a productivity suite for writers, planners, bloggers, content creators, 
 - TypeScript
 - Shadcn
 - TailwindCSS
-- Clerk
-- Prisma
-- Supabase
+- Supabase Auth & DB
 
 ## Download for Windows
 
