@@ -31,3 +31,27 @@ export function LogoLoadingState({ text }: { text: string }) {
         </div>
     )
 }
+
+export function LogoState({ size }: { size: string }) {
+    const { resolvedTheme } = useTheme();
+
+    return resolvedTheme === 'light' ? (
+        <Image
+            src="/logos/logo.svg"
+            alt="Logo"
+            width={100}
+            height={100}
+            className={size}
+            loading='eager'
+        />
+    ) : (
+        <Image
+            src="/logos/logo2.svg"
+            alt="Logo"
+            width={100}
+            height={100}
+            className={size}
+            loading='eager'
+        />
+    )
+}

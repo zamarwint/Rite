@@ -2,6 +2,8 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -172,5 +174,32 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  ::selection {
+    @apply bg-foreground text-background;
+  }
+}
+
+@layer base {
+
+  /* WEBKIT BROWSERS: CHROME, EDGE AND SAFARI */
+  /* Minimalist Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-md cursor-pointer;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground cursor-pointer;
   }
 }

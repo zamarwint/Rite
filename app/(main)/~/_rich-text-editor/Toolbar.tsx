@@ -7,11 +7,13 @@ import {
     Heading1,
     Heading2,
     FileCheck,
+    Heading4,
+    Heading3,
 } from 'lucide-react'
 import type { Editor } from '@tiptap/react'
-import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Toggle } from '@/components/ui/toggle'
+import { cn } from '@/lib/utils'
 
 // 2. SUBTLE FORMATTING TOOLBAR (Hidden in Zen Mode)
 export default function Toolbar({ editor, isDictating }: { editor: Editor | null, isDictating: boolean }) {
@@ -50,6 +52,34 @@ export default function Toolbar({ editor, isDictating }: { editor: Editor | null
                 <Tooltip>
                     <TooltipTrigger render={
                         <Toggle
+                            pressed={editor?.isActive('heading', { level: 3 }) ?? false}
+                            onPressedChange={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()}
+                            className="p-1.5 rounded hover:bg-background text-foreground transition-colors cursor-pointer"
+                            title="Heading 3"
+                        >
+                            <Heading3 className="size-3.5" />
+                        </Toggle>} />
+                    <TooltipContent>
+                        <p>Heading 3</p>
+                    </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                    <TooltipTrigger render={
+                        <Toggle
+                            pressed={editor?.isActive('heading', { level: 4 }) ?? false}
+                            onPressedChange={() => editor?.chain().focus().toggleHeading({ level: 4 }).run()}
+                            className="p-1.5 rounded hover:bg-background text-foreground transition-colors cursor-pointer"
+                            title="Heading 4"
+                        >
+                            <Heading4 className="size-3.5" />
+                        </Toggle>} />
+                    <TooltipContent>
+                        <p>Heading 4</p>
+                    </TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                    <TooltipTrigger render={
+                        <Toggle
                             pressed={editor?.isActive('bold') ?? false}
                             onPressedChange={() => editor?.chain().focus().toggleBold().run()}
                             className="p-1.5 rounded hover:bg-background text-foreground transition-colors cursor-pointer"
@@ -66,7 +96,7 @@ export default function Toolbar({ editor, isDictating }: { editor: Editor | null
                         <Toggle
                             pressed={editor?.isActive('italic') ?? false}
                             onPressedChange={() => editor?.chain().focus().toggleItalic().run()}
-                            className="p-1.5 rounded hover:bg-background text-foreground transition-colors cursor-pointer"
+                            className={cn('p-1.5 rounded hover:bg-background text-foreground transition-colors cursor-pointer', editor?.isActive('italic') ? 'bg-background' : 'bg-transparent')}
                             title="Italic"
                         >
                             <Italic className="size-3.5" />

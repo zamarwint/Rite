@@ -27,6 +27,31 @@ const fontMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Rite",
   description: "A productivity suite for writers, planners, bloggers, content creators, journalists, etc.",
+  metadataBase: process.env.APP_URL as string,
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    url: '/',
+    title: "Rite",
+    description: "A productivity suite for writers, planners, bloggers, content creators, journalists, etc.",
+    images: [
+      {
+        url: '/og.png',
+        width: 1200,
+        height: 630,
+        alt: "Rite",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rite",
+    description: "A productivity suite for writers, planners, bloggers, content creators, journalists, etc.",
+    images: ['/og.png'],
+  },
+  keywords: ["AI", "Productivity", "Writing", "Planning", "Blogging", "Content Creation", "Journalism"],
 };
 
 export default function RootLayout({

@@ -24,7 +24,7 @@ import { DocumentEntry, SupabaseClaims, WorkspaceFolder } from '@/types/types';
 import { Button } from '@/components/ui/button';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 import { cn } from '@/lib/utils';
-import UserDropdown from '../../auth/_components/UserDropdown';
+import UserDropdown from '../../(auth)/_components/UserDropdown';
 
 interface DashboardSidebarProps {
   data: SupabaseClaims;

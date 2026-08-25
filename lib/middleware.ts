@@ -40,11 +40,11 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect unauthenticated users away from protected routes.
   // Only the dashboard (/~) and its sub-routes require authentication.
-  // Everything else (/, /auth/*, etc.) is publicly accessible.
+  // Everything else (/, /(auth)/*, etc.) is publicly accessible.
   const pathname = request.nextUrl.pathname;
 
   if (!user && pathname.startsWith('/~')) {
-    return NextResponse.redirect(new URL('/auth/login', request.url));
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.

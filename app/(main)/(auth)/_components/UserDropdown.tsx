@@ -2,12 +2,12 @@
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ChevronDown } from "lucide-react";
+import { Briefcase, ChevronDown, HomeIcon, SettingsIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SupabaseClaims } from "@/types/types";
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { LogoutButton } from "@/components/logout-button";
+import { LogoutButton } from "@/components/auth/logout-button";
 import { cn } from "@/lib/utils";
 
 function LogOutDialog({ open, setOpen }: { open: boolean, setOpen: (open: boolean) => void }) {
@@ -47,9 +47,9 @@ export default function UserDropdown({ data, full, small }: { data: SupabaseClai
                 </Button>
             }></DropdownMenuTrigger>
             <DropdownMenuContent align={small ? 'start' : 'end'}>
-                <DropdownMenuItem className='cursor-pointer'>Profile</DropdownMenuItem>
-                <DropdownMenuItem className='cursor-pointer'>Billing</DropdownMenuItem>
-                <DropdownMenuItem className='cursor-pointer'>Subscription</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'><HomeIcon /> Profile</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'><SettingsIcon /> Settings</DropdownMenuItem>
+                <DropdownMenuItem className='cursor-pointer'><Briefcase /> Workspaces</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className='cursor-pointer' onClick={() => setOpenLogOut(!openLogOut)}>Log Out</DropdownMenuItem>
             </DropdownMenuContent>

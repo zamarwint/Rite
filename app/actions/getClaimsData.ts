@@ -8,7 +8,7 @@ export async function getClaimsData() {
 
     const { data, error } = await supabase.auth.getClaims()
     if (error || !data?.claims) {
-        redirect('/auth/login')
+        redirect('/login')
     }
     return data
 }

@@ -4,21 +4,19 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Toolbar from './Toolbar';
 import TextAlign from '@tiptap/extension-text-align';
-import Heading from '@tiptap/extension-heading';
 import { DocumentEntry } from '@/types/types';
 
 export default function Editor({
-    isZenMode,
     isDictating,
     document,
     onUpdateContent
 }: {
-    isZenMode: boolean
     isDictating: boolean;
     document: DocumentEntry
     onUpdateContent: (newContent: string) => void;
 }) {
     const editor = useEditor({
+        content: document.content,
         extensions: [
             StarterKit.configure({
                 heading: {
@@ -30,25 +28,30 @@ export default function Editor({
             })],
         editorProps: {
             attributes: {
-                class: 'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
-                value: document.content,
+                class: 'prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none focus:outline-none p-8',
                 placeholder: 'Close the tabs. Silence the noise. Begin typing your thoughts here...',
                 spellCheck: 'true',
                 autoFocus: 'true',
             },
+            scrollThreshold: 100,
+            scrollMargin: 100,
         },
         immediatelyRender: false
+
     })
 
     return (
-        <div>
-            {!isZenMode && <Toolbar
+        <>
+            <Toolbar
                 editor={editor}
                 isDictating={isDictating}
-            />}
-            <EditorContent
-                editor={editor}
             />
-        </div>
+            <div className='size-full overflow-auto'>
+                <EditorContent
+                    editor={editor}
+                    scrolling='true'
+                />
+            </div>
+        </>
     )
 }

@@ -45,9 +45,6 @@ export const DashboardCanvas: React.FC<DashboardCanvasProps> = ({
   onToggleTTS,
   onOpenSpecsModal,
 }) => {
-  const [fontFamily, setFontFamily] = useState<'serif' | 'sans' | 'mono'>('serif');
-  const [fontSize, setFontSize] = useState<'normal' | 'large' | 'huge'>('normal');
-  const [copied, setCopied] = useState(false);
   const [showExitZenPrompt, setShowExitZenPrompt] = useState(false);
 
   const wordCount = document.content.trim() ? document.content.trim().split(/\s+/).length : 0;
@@ -64,13 +61,6 @@ export const DashboardCanvas: React.FC<DashboardCanvasProps> = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isZenMode, onToggleZenMode]);
-
-  // Copy handler
-  const handleCopy = () => {
-    navigator.clipboard.writeText(document.content);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <main
@@ -113,7 +103,7 @@ export const DashboardCanvas: React.FC<DashboardCanvasProps> = ({
 
       {/* 1. TOP HEADER & METRICS BAR (Hidden in Zen Mode) */}
       {!isZenMode && (
-        <header className="h-16 px-6 border-b border-border bg-background backdrop-blur-sm flex items-center justify-between z-20 shrink-0">
+        <header className="h-16 px-6 border-b border-border bg-background backdrop-blur-sm flex items-center justify-between z-20 shrink-0 overflow-auto">
           {/* Left: Document Title Input */}
           <div className="flex items-center space-x-3 flex-1 max-w-xl">
             <div className="w-2 h-2 rounded-full bg-primary" />
@@ -138,36 +128,8 @@ export const DashboardCanvas: React.FC<DashboardCanvasProps> = ({
               </span>
             </div>
 
-            {/* Typography Controls Dropdown / Buttons */}
-            <div className="flex items-center rounded-lg">
-              <Button
-                onClick={() => setFontFamily(fontFamily === 'serif' ? 'sans' : fontFamily === 'sans' ? 'mono' : 'serif')}
-                variant='outline'
-                title="Cycle Font: Serif / Sans / Mono"
-              >
-                <Type className="w-3.5 h-3.5 text-primary" />
-                <span className="uppercase text-[10px]">{fontFamily}</span>
-              </Button>
-
-              <Button
-                onClick={() => setFontSize(fontSize === 'normal' ? 'large' : fontSize === 'large' ? 'huge' : 'normal')}
-                variant='outline'
-                title="Font Size: Normal / Large / Huge"
-              >
-                <span className="text-[10px] uppercase font-bold">{fontSize[0]}</span>
-              </Button>
-            </div>
-
             {/* Actions: Copy, Zen Mode */}
             <div className="flex items-center space-x-2">
-              <Button
-                onClick={handleCopy}
-                variant='ghost'
-                title="Copy Text to Clipboard"
-              >
-                {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
-              </Button>
-
               <Button
                 id="zen-mode-toggle-Button"
                 onClick={onToggleZenMode}
@@ -183,19 +145,22 @@ export const DashboardCanvas: React.FC<DashboardCanvasProps> = ({
       )}
 
       {/* 2. SUBTLE FORMATTING TOOLBAR (Hidden in Zen Mode) */}
-      <Editor document={document} isZenMode={isZenMode} isDictating={isDictating} updateContent={onUpdateContent} />
+      {!isZenMode && <Editor document={document} isDictating={isDictating} onUpdateContent={onUpdateContent} />}
 
       {/* 3. MAIN WRITING CANVAS (The Sanctuary) */}
-      <div className="flex-1 overflow-y-auto px-6 sm:px-12 md:px-20 py-8 sm:py-12 flex justify-center">
+      {isZenMode && <div className="flex-1 overflow-y-auto px-6 sm:px-12 md:px-20 py-8 sm:py-12 flex justify-center">
         <div className="w-full max-w-3xl flex flex-col">
           {/* Document Title Header for Zen Mode / Document Header */}
-          {isZenMode && (
-            <h1 className="text-3xl sm:text-4xl font-serif font-black text-foreground mb-8 pb-4 border-b border-border">
-              {document.title}
-            </h1>
-          )}
+
+          <h1 className="text-3xl sm:text-4xl font-serif font-black text-foreground pb-4 border-b border-border">
+            {document.title}
+          </h1>
+
+          {/* 2. SUBTLE FORMATTING TOOLBAR (Hidden in Zen Mode) */}
+          <Editor document={document} isDictating={isDictating} onUpdateContent={onUpdateContent} />
         </div>
       </div>
+      }
 
       {/* 4. BOTTOM STATUS BAR (Hidden in Zen Mode) */}
       {!isZenMode && (

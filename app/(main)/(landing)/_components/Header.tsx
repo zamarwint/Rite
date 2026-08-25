@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import TryGetClaimsDataQuery from '@/lib/queries/TryGetClaimsDataQuery';
-import UserDropdown from '../../auth/_components/UserDropdown';
+import UserDropdown from '../../(auth)/_components/UserDropdown';
+import { LogoState } from '@/app/_components/LogoStates';
 
 interface HeaderProps {
   isFocusMode: boolean;
@@ -51,25 +52,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          {resolvedTheme === 'light' ? (
-            <Image
-              src="/logos/logo.svg"
-              alt="Logo"
-              width={100}
-              height={100}
-              className='w-14 h-14'
-              loading='eager'
-            />
-          ) : (
-            <Image
-              src="/logos/logo2.svg"
-              alt="Logo"
-              width={100}
-              height={100}
-              className='w-14 h-14'
-              loading='eager'
-            />
-          )}
+          <LogoState size={'size-5'} />
 
           <div className="flex flex-col">
             <span className="font-serif text-2xl font-black tracking-tight leading-none">

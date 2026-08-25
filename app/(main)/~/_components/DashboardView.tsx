@@ -11,6 +11,7 @@ import { ArrowLeft, Home, Sliders } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import { LogoState } from '@/app/_components/LogoStates';
 
 interface DashboardViewProps {
   data: SupabaseClaims;
@@ -196,25 +197,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ data }) => {
       {!isZenMode && (
         <div className="h-10 bg-background border-b border-border px-4 flex items-center justify-between text-xs font-mono shrink-0 z-40">
           <div className="flex items-center space-x-1.5 cursor-pointer" onClick={() => router.push('/')}>
-            {resolvedTheme === 'light' ? (
-              <Image
-                src="/logos/logo.svg"
-                alt="Logo"
-                width={100}
-                height={100}
-                className='size-5'
-                loading='eager'
-              />
-            ) : (
-              <Image
-                src="/logos/logo2.svg"
-                alt="Logo"
-                width={100}
-                height={100}
-                className='size-5'
-                loading='eager'
-              />
-            )}
+            <LogoState size={'size-5'} />
             <span className="font-bold text-foreground">RITE</span>
             <span className="text-muted-foreground">/</span>
             <span className="text-primary font-semibold">dashboard</span>

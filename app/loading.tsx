@@ -1,4 +1,4 @@
-import { LogoLoadingState } from "./_components/LoadingStates";
+import { LogoLoadingState } from "./_components/LogoStates";
 
 export default function Loading() {
     return (

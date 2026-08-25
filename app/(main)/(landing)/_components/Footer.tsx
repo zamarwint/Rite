@@ -3,6 +3,7 @@ import { Feather, FileText, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
+import { LogoState } from '@/app/_components/LogoStates';
 
 const footerLinks = [
   {
@@ -63,25 +64,7 @@ export const Footer = () => {
           {/* Column 1: Brand */}
           <div>
             <div className="flex items-center justify-start space-x-2 mb-4">
-              {resolvedTheme === 'light' ? (
-                <Image
-                  src="/logos/logo.svg"
-                  alt="Logo"
-                  width={100}
-                  height={100}
-                  className='w-14 h-14'
-                  loading='eager'
-                />
-              ) : (
-                <Image
-                  src="/logos/logo2.svg"
-                  alt="Logo"
-                  width={100}
-                  height={100}
-                  className='w-14 h-14'
-                  loading='eager'
-                />
-              )}
+              <LogoState size={'size-10'} />
               <span className="font-serif text-2xl font-black text-foreground tracking-tight">
                 Rite<span className="text-primary">.</span>
               </span>
@@ -89,13 +72,6 @@ export const Footer = () => {
             <p className="text-sm font-normal text-foreground/70 leading-relaxed mb-4">
               The quiet space for digital creators, journalists, planners, and authors.
             </p>
-            <button
-
-              className="inline-flex items-center space-x-1.5 text-xs font-mono font-bold text-primary hover:underline"
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span>Inspect Wireframe Blueprint</span>
-            </button>
           </div>
 
           {footerLinks.map((column, key) => (
