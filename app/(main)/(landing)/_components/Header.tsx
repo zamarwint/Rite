@@ -1,19 +1,12 @@
-import React from 'react';
 import { Pen, ExternalLink } from 'lucide-react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/app/_components/ModeToggle';
 import { useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import TryGetClaimsDataQuery from '@/lib/queries/TryGetClaimsDataQuery';
 import UserDropdown from '../../(auth)/_components/UserDropdown';
 import { LogoState } from '@/app/_components/LogoStates';
-
-interface HeaderProps {
-  isFocusMode: boolean;
-  onToggleFocusMode: () => void;
-}
+import { Skeleton } from '@/components/ui/skeleton';
 
 const headerLinks = [
   {
@@ -35,12 +28,8 @@ const headerLinks = [
   }
 ]
 
-export const Header: React.FC<HeaderProps> = ({
-  isFocusMode,
-  onToggleFocusMode,
-}) => {
+export const Header = () => {
   const router = useRouter();
-  const { resolvedTheme } = useTheme();
 
   const { data, error, isPending } = TryGetClaimsDataQuery();
 
@@ -77,7 +66,18 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Right CTA Actions */}
         <div className="flex items-center space-x-3">
           {/* Primary CTA */}
-          {!data ? (
+          {isPending ? (
+            <>
+              <Skeleton
+                className='h-10 w-32 rounded-full'
+              />
+              <Skeleton
+                className='h-10 w-10 rounded-full'
+              />
+            </>
+          ) : error ? (
+            <span>Something went wrong.</span>
+          ) : !data ? (
             <Button
               onClick={() => router.push('/~')}
               id="header-cta-button"

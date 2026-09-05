@@ -1,14 +1,7 @@
-import React, { useState } from 'react';
 import { FEATURE_CARDS } from '@/lib/data/wireframeSpecs';
 import { PenTool, CheckSquare, Timer, Mic, ArrowUpRight, Sparkles, Volume2 } from 'lucide-react';
 
-interface FeaturesSectionProps {
-  onOpenAppWithFeature?: (featureId: string) => void;
-}
-
-export const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onOpenAppWithFeature }) => {
-  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
-
+export const FeaturesSection = () => {
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'PenTool':
@@ -47,10 +40,6 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({ onOpenAppWithF
           {FEATURE_CARDS.map((card) => (
             <div
               key={card.id}
-              onClick={() => {
-                setSelectedFeature(card.id);
-                if (onOpenAppWithFeature) onOpenAppWithFeature(card.id);
-              }}
               className="group relative bg-backgrond rounded-2xl p-8 border-2 border-foreground shadow-md hover:shadow-xl hover:border-primary transition-all duration-300 transform hover:-translate-y-1.5 cursor-pointer flex flex-col justify-between"
             >
               <div>

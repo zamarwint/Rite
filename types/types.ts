@@ -1,63 +1,123 @@
-import { JwtHeader, JwtPayload } from "@supabase/supabase-js";
+// Hand-written to match 001_init_rite_schema.sql.
+// Once the migration is applied, regenerate this file from the real schema
+// instead of maintaining it by hand:
+//
+//   supabase gen types typescript --project-id <project-ref> > lib/supabase/types.ts
+//
+// or, for local dev against the Supabase CLI:
+//
+//   supabase gen types typescript --local > lib/supabase/types.ts
 
-export interface FeatureCard {
-  id: string;
-  title: string;
-  headline: string;
-  body: string;
-  iconName: string;
-  badge?: string;
+export type Priority = 'high' | 'medium' | 'low'
+
+export interface Database {
+  public: {
+    Tables: {
+      workspaces: {
+        Row: {
+          id: string
+          user_id: string
+          name: string
+          created_at: string
+          updated_at: string
+          deleted_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          name: string
+          created_at?: string
+          updated_at?: string
+          deleted_at?: string | null
+        }
+        Update: Partial<Database['public']['Tables']['workspaces']['Insert']>
+      }
+      folders: {
+        Row: {
+          id: string
+          user_id: string
+          workspace_id: string
+          parent_folder_id: string | null
+          name: string
+          icon_color: string
+          position: number
+          created_at: string
+          updated_at: string
+          deleted_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          workspace_id: string
+          parent_folder_id?: string | null
+          name: string
+          icon_color?: string
+          position?: number
+          created_at?: string
+          updated_at?: string
+          deleted_at?: string | null
+        }
+        Update: Partial<Database['public']['Tables']['folders']['Insert']>
+      }
+      documents: {
+        Row: {
+          id: string
+          user_id: string
+          folder_id: string | null
+          title: string
+          content: Record<string, unknown> // Tiptap/ProseMirror JSON doc
+          tags: string[]
+          word_count: number
+          is_favorite: boolean
+          position: number
+          search_vector: unknown | null // tsvector — not queried client-side
+          created_at: string
+          updated_at: string
+          deleted_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          folder_id?: string | null
+          title?: string
+          content?: Record<string, unknown>
+          tags?: string[]
+          is_favorite?: boolean
+          position?: number
+          created_at?: string
+          deleted_at?: string | null
+          // word_count, updated_at, search_vector are set by DB triggers — omit on insert/update
+        }
+        Update: Partial<Database['public']['Tables']['documents']['Insert']>
+      }
+      tasks: {
+        Row: {
+          id: string
+          user_id: string
+          folder_id: string | null
+          text: string
+          completed: boolean
+          priority: Priority | null
+          due_date: string | null
+          position: number
+          created_at: string
+          updated_at: string
+          deleted_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          folder_id?: string | null
+          text: string
+          completed?: boolean
+          priority?: Priority | null
+          due_date?: string | null
+          position?: number
+          created_at?: string
+          deleted_at?: string | null
+        }
+        Update: Partial<Database['public']['Tables']['tasks']['Insert']>
+      }
+    }
+  }
 }
-
-export interface Testimonial {
-  id: string;
-  quote: string;
-  author: string;
-  role: string;
-  avatar: string;
-  publication?: string;
-}
-
-export interface TaskItem {
-  id: string;
-  text: string;
-  completed: boolean;
-  priority?: 'high' | 'medium' | 'low';
-  documentId?: string;
-  dueDate?: string;
-}
-
-export interface DocumentEntry {
-  id: string;
-  title: string;
-  content: string;
-  updatedAt: string;
-  folder: string;
-  tags: string[];
-  wordCount: number;
-  isFavorite?: boolean;
-}
-
-export interface WorkspaceFolder {
-  id: string;
-  name: string;
-  count: number;
-  icon: string;
-}
-
-export interface WireframeSectionSpec {
-  id: string;
-  sectionName: string;
-  designNotes: string[];
-  headline: string;
-  subHeadline?: string;
-  ctaText?: string;
-  microCopy?: string;
-  keyElements: string[];
-}
-
-export type SupabaseClaims = {
-  claims: JwtPayload;
-  header: JwtHeader;
-  signature: Uint8Array;
-} | null

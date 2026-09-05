@@ -1,8 +1,5 @@
 import React from 'react';
-import { Feather, FileText, ExternalLink } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
 import { LogoState } from '@/app/_components/LogoStates';
 
 const footerLinks = [
@@ -55,8 +52,6 @@ const footerLinks = [
 ];
 
 export const Footer = () => {
-  const { resolvedTheme } = useTheme();
-
   return (
     <footer id="footer" className="bg-background text-foreground/70 pt-16 pb-12 border-t border-background/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,3 +99,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;
